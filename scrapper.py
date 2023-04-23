@@ -73,7 +73,7 @@ for id_ingredient, ingredient_link in enumerate(ingredients_href):
         driver.get('https://www.allrecipes.com/ingredients-a-z-6740416')
         array_list = {
             'ingredients': ingredient_names,
-            'recipes': recipes_object
+            'recipe': recipes_object
         }
 
 fichier_json = open('data.json', 'w')
