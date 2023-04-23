@@ -71,13 +71,19 @@ for id_ingredient, ingredient_link in enumerate(ingredients_href):
                         recette_check['ingredient'].append(ingredient_names[id_ingredient])
 
         driver.get('https://www.allrecipes.com/ingredients-a-z-6740416')
-        array_list = {
-            'ingredients': ingredient_names,
-            'recipe': recipes_object
-        }
+        
+ingredients_list = {
+    'ingredients': ingredient_names,
+}
 
-fichier_json = open('data.json', 'w')
-json.dump(array_list, fichier_json)
-fichier_json.close()
+recipes_list = {
+    'recipes': recipes_object,
+}
 
+with open('ingredients.json', 'w') as f:
+    json.dump(ingredient_names, f)
+
+with open('recipes.json', 'w') as f:
+    json.dump(recipes_object, f)
+    
 driver.quit()
