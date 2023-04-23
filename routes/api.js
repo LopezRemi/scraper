@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Ingredient = require("../models/ingredients")
 const Recipe = require("../models/recipe")
+const ingredientsData = require("../ingredients.json")
 
 const IndexController = require("../controllers/index.controller")
 const { validate } = require("../middlewares/validators/wrapper.validator")
@@ -10,15 +11,39 @@ const { indexValidator } = require("../middlewares/validators/index.validations"
 router.get("/", IndexController.index)
 router.post("/", validate(indexValidator), IndexController.indexPost)
 
+
+router.post("/ingredients", async (req, res) => {
+    try {
+        // Enregistrement de chaque ingrédient dans la base de données
+        for (const ingredient of ingredientsData) {
+            await Ingredient.create({ ingredients: ingredient })
+        }
+
 router.get("/ingredients", async (request, response) => {
     const myIngredients = await Ingredient.find()
     console.log(myIngredients)
     response.json({ data: myIngredients })
 })
+        
+router.delete("/ingredients", async (req, res) => {
+    try {
+        await Ingredient.deleteMany();
+        res.json({ message: "All ingredients have been deleted from the database." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while deleting the ingredients." });
+    }
+});
 
-router.post("/ingredients", async (request, response) => {
-    const myIngredients = new Ingredient({ ingredients: "test" })
-    await myIngredients.save()
+        res.status(201).send("Ingrédients enregistrés avec succès")
+    } catch (error) {
+        console.error(error)
+        res.status(500).send("Erreur lors de l'enregistrement des ingrédients")
+    }
+})
+
+router.get("/ingredients", async (request, response) => {
+    const myIngredients = await Ingredient.find()
     console.log(myIngredients)
     response.json({ data: myIngredients })
 })

@@ -2,8 +2,7 @@ const mongoose = require("mongoose");
 
 const IngredientSchema = new mongoose.Schema(
     {
-        ingredients:String,
-        main_id: [{type: mongoose.Schema.Types.ObjectId, ref: 'recipe'}],
+        ingredients:String
     })
     
     const Ingredient = mongoose.model("ingredients",IngredientSchema);
