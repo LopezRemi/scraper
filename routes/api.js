@@ -498,4 +498,29 @@ router.get("/recipes", async (request, response) => {
         })
     }
 })
+
+/**
+ * Supprimer tous les documents de la collection "recipes".
+ * @swagger
+ * /recipes:
+ *   delete:
+ *     summary: Supprimer tous les documents de la collection "recipes".
+ *     tags: [Recipes]
+ *     responses:
+ *       '200':
+ *         description: Tous les documents de la collection "recipes" ont été supprimés.
+ *       '500':
+ *         description: Erreur lors de la suppression des documents de la collection "recipes".
+ */
+
+router.delete("/recipes", async (req, res) => {
+    try {
+        await Recipe.deleteMany()
+        res.status(200).send('Tous les documents de la collection "recipes" ont été supprimés.')
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Erreur lors de la suppression des documents de la collection "recipes".')
+    }
+})
+
 module.exports = router
